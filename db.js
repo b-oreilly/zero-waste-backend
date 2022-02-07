@@ -4,7 +4,7 @@ const init = () => {
     mongoose.set('debug', true)
 
     mongoose.connect(process.env.DB_ATLAS_URL, {
-        // useURLParser: true,
+        useNewURLParser: true,
         // createIndexes: true,
     })
     .catch((err)=>{
