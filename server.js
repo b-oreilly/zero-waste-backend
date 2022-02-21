@@ -9,6 +9,10 @@ const { getAllItems, getSingleItem, addItem, editItem, deleteItem } = require('.
 const { register, login, loginRequired, getAllUsers, getSingleUser, editUser, deleteUser } = require('./controllers/user_controller')
 const { getAllCategories, addCategory, getSingleCategory, editCategory, deleteCategory } = require('./controllers/category_controller')
 const { getAllQualities, getSingleQuality, addQuality, editQuality, deleteQuality } = require('./controllers/quality_controller')
+const { getAllReviews, getSingleReview, addReview, editReview, deleteReview } = require('./controllers/review_controller')
+const { getAllInteractions, getSingleInteraction, addInteraction, editInteraction, deleteInteraction } = require('./controllers/interaction_controller')
+const { getAllUserInteractions, getSingleUserInteraction, addUserInteraction, editUserInteraction, deleteUserInteraction } = require('./controllers/userInteraction_controller')
+const { getAllMessages, getSingleMessage, addMessage, editMessage, deleteMessage } = require('./controllers/message_controller')
 
 
 const port = process.env.PORT || 3000
@@ -63,6 +67,34 @@ app.get('/users', loginRequired, getAllUsers)
 app.get('/users/:id', loginRequired, getSingleUser)
 app.put('/users/:id', loginRequired, editUser)
 app.delete('/users/:id', loginRequired, deleteUser)
+
+// Review Routes 
+app.get('/reviews', getAllReviews)
+app.get('/reviews/:id', getSingleReview)
+app.post('/reviews', loginRequired, addReview)
+app.put('/reviews/:id', loginRequired, editReview)
+app.delete('/reviews/:id', loginRequired, deleteReview)
+
+// Interaction Routes 
+app.get('/interactions', getAllInteractions)
+app.get('/interactions/:id', getSingleInteraction)
+app.post('/interactions', loginRequired, addInteraction)
+app.put('/interactions/:id', loginRequired, editInteraction)
+app.delete('/interactions/:id', loginRequired, deleteInteraction)
+
+// UserInteraction Routes 
+app.get('/user_interactions', getAllUserInteractions)
+app.get('/user_interactions/:id', getSingleUserInteraction)
+app.post('/user_interactions', loginRequired, addUserInteraction)
+app.put('/user_interactions/:id', loginRequired, editUserInteraction)
+app.delete('/user_interactions/:id', loginRequired, deleteUserInteraction)
+
+// UserInteraction Routes 
+app.get('/messages', getAllMessages)
+app.get('/messages/:id', getSingleMessage)
+app.post('/messages', loginRequired, addMessage)
+app.put('/messages/:id', loginRequired, editMessage)
+app.delete('/messages/:id', loginRequired, deleteMessage)
 
 /////////////////////////////////////
 
