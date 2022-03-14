@@ -35,6 +35,8 @@ const login = (req, res) => {
             }
             // create token
             res.json({
+                user,
+                // user: user.id,
                 token: jwt.sign({
                         email: user.email,
                         username: user.username,
