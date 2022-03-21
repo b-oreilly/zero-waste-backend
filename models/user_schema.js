@@ -40,15 +40,10 @@ const userSchema = new Schema({
         trim: true,
         required: [true, 'Password is required.']
     },
-    latitude: {
-        type: Number,
-        trim: true,
-        required: [true, 'Lat is required.']
-    },
-    longitude: {
-        type: Number,
-        trim: true,
-        required: [true, 'Long is required.']
+    locationID: {
+        type: Schema.Types.ObjectId,
+        ref: "Location",
+        required: [true, 'Location is required.']
     },
     pfp: {
         type: String

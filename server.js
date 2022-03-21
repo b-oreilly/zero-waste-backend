@@ -13,6 +13,7 @@ const { getAllReviews, getSingleReview, addReview, editReview, deleteReview, get
 const { getAllInteractions, getSingleInteraction, addInteraction, editInteraction, deleteInteraction } = require('./controllers/interaction_controller')
 const { getAllUserInteractions, getSingleUserInteraction, addUserInteraction, editUserInteraction, deleteUserInteraction } = require('./controllers/userInteraction_controller')
 const { getAllMessages, getSingleMessage, addMessage, editMessage, deleteMessage, getUserSentMessages, getUserReceivedMessages } = require('./controllers/message_controller')
+const { getAllLocations, getSingleLocation, addLocation, editLocation, deleteLocation } = require('./controllers/location_controller')
 
 
 const port = process.env.PORT || 3000
@@ -99,6 +100,13 @@ app.put('/messages/:id', loginRequired, editMessage)
 app.delete('/messages/:id', loginRequired, deleteMessage)
 app.get('/messages/user/sent/:senderUserID', getUserSentMessages)
 app.get('/messages/user/received/:receiverUserID', getUserReceivedMessages)
+
+// Location Routes
+app.get('/locations', getAllLocations)
+app.get('/locations/:id', getSingleLocation)
+app.post('/locations', loginRequired, addLocation)
+app.put('/locations/:id', loginRequired, editLocation)
+app.delete('/locations/:id', loginRequired, deleteLocation)
 
 /////////////////////////////////////
 

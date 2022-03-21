@@ -53,7 +53,7 @@ const login = (req, res) => {
 }
 
 const getAllUsers = (req, res) => {
-    User.find()
+    User.find().populate('locationID')
         .then((data) => {
             if (data) {
                 res.status(200).json(data)
@@ -68,7 +68,7 @@ const getAllUsers = (req, res) => {
 }
 
 const getSingleUser = (req, res) => {
-    User.findById(req.params.id)
+    User.findById(req.params.id).populate('locationID')
     .then((data) => {
         if (data) {
             res.status(200).json(data)
