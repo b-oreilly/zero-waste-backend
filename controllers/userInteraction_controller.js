@@ -1,7 +1,16 @@
 const UserInteraction = require('../models/userInteraction_schema')
 
 const getAllUserInteractions = (req, res) => {
-    UserInteraction.find().populate('userID').populate('itemID').populate('interactionID')
+    UserInteraction.find()
+    .populate('userID')
+    .populate({ 
+        path: 'itemID',
+        populate: {
+            path: 'userID',
+            model: 'User'
+        } 
+     })
+     .populate('interactionID')
         .then((data) => {
             if (data) {
                 res.status(200).json(data)
@@ -16,14 +25,16 @@ const getAllUserInteractions = (req, res) => {
 }
 
 const getSingleUserInteraction = (req, res) => {
-    UserInteraction.findById(req.params.id).populate('userID')
+    UserInteraction.findById(req.params.id)
+    .populate('userID')
     .populate({ 
         path: 'itemID',
         populate: {
             path: 'userID',
             model: 'User'
         } 
-     }).populate('interactionID')
+     })
+     .populate('interactionID')
     .then((data) => {
         if (data) {
             res.status(200).json(data)
