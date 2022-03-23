@@ -14,6 +14,7 @@ const { getAllInteractions, getSingleInteraction, addInteraction, editInteractio
 const { getAllUserInteractions, getSingleUserInteraction, addUserInteraction, editUserInteraction, deleteUserInteraction } = require('./controllers/userInteraction_controller')
 const { getAllMessages, getSingleMessage, addMessage, editMessage, deleteMessage, getUserSentMessages, getUserReceivedMessages } = require('./controllers/message_controller')
 const { getAllLocations, getSingleLocation, addLocation, editLocation, deleteLocation } = require('./controllers/location_controller')
+const { getAllConversations, getSingleConversation, addConversation, editConversation, deleteConversation } = require('./controllers/conversation_controller')
 
 
 const port = process.env.PORT || 3000
@@ -107,6 +108,13 @@ app.get('/locations/:id', getSingleLocation)
 app.post('/locations', loginRequired, addLocation)
 app.put('/locations/:id', loginRequired, editLocation)
 app.delete('/locations/:id', loginRequired, deleteLocation)
+
+// Conversation Routes
+app.get('/conversations', getAllConversations)
+app.get('/conversations/:id', getSingleConversation)
+app.post('/conversations', loginRequired, addConversation)
+app.put('/conversations/:id', loginRequired, editConversation)
+app.delete('/conversations/:id', loginRequired, deleteConversation)
 
 /////////////////////////////////////
 
