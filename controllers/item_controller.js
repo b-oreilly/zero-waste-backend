@@ -94,7 +94,9 @@ const getUserItems = (req, res) => {
 
 const getCategoryItems = (req, res) => {
 
-    Item.find({categoryID: req.params.categoryID}).populate('qualityID').populate('userID')
+    Item.find({
+        categoryID: req.params.categoryID
+    }).populate('qualityID').populate('userID').populate('categoryID')
     .then((data) => {
         if (data) {
             res.status(200).json(data)
@@ -106,7 +108,9 @@ const getCategoryItems = (req, res) => {
 
 const getQualityItems = (req, res) => {
 
-    Item.find({qualityID: req.params.qualityID}).populate('categoryID').populate('userID')
+    Item.find({
+        qualityID: req.params.qualityID
+    }).populate('categoryID').populate('userID').populate('qualityID')
     .then((data) => {
         if (data) {
             res.status(200).json(data)
