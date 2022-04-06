@@ -5,16 +5,85 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 require('./db')()
 
-const { getAllItems, getSingleItem, addItem, editItem, deleteItem, getUserItems, getCategoryItems, getQualityItems } = require('./controllers/item_controller')
-const { register, login, loginRequired, getAllUsers, getSingleUser, editUser, deleteUser } = require('./controllers/user_controller')
-const { getAllCategories, addCategory, getSingleCategory, editCategory, deleteCategory } = require('./controllers/category_controller')
-const { getAllQualities, getSingleQuality, addQuality, editQuality, deleteQuality } = require('./controllers/quality_controller')
-const { getAllReviews, getSingleReview, addReview, editReview, deleteReview, getUserReviews, getUserReviewed } = require('./controllers/review_controller')
-const { getAllInteractions, getSingleInteraction, addInteraction, editInteraction, deleteInteraction } = require('./controllers/interaction_controller')
-const { getAllUserInteractions, getSingleUserInteraction, addUserInteraction, editUserInteraction, deleteUserInteraction } = require('./controllers/userInteraction_controller')
-const { getAllMessages, getSingleMessage, addMessage, editMessage, deleteMessage, getUserSentMessages, getUserReceivedMessages } = require('./controllers/message_controller')
-const { getAllLocations, getSingleLocation, addLocation, editLocation, deleteLocation } = require('./controllers/location_controller')
-const { getAllConversations, getSingleConversation, addConversation, editConversation, deleteConversation } = require('./controllers/conversation_controller')
+const {
+    getAllItems,
+    getSingleItem,
+    addItem,
+    editItem,
+    deleteItem,
+    getUserItems,
+    getCategoryItems,
+    getQualityItems
+} = require('./controllers/item_controller')
+const {
+    register,
+    login,
+    loginRequired,
+    getAllUsers,
+    getSingleUser,
+    editUser,
+    deleteUser
+} = require('./controllers/user_controller')
+const {
+    getAllCategories,
+    addCategory,
+    getSingleCategory,
+    editCategory,
+    deleteCategory
+} = require('./controllers/category_controller')
+const {
+    getAllQualities,
+    getSingleQuality,
+    addQuality,
+    editQuality,
+    deleteQuality
+} = require('./controllers/quality_controller')
+const {
+    getAllReviews,
+    getSingleReview,
+    addReview,
+    editReview,
+    deleteReview,
+    getUserReviews,
+    getUserReviewed
+} = require('./controllers/review_controller')
+const {
+    getAllInteractions,
+    getSingleInteraction,
+    addInteraction,
+    editInteraction,
+    deleteInteraction
+} = require('./controllers/interaction_controller')
+const {
+    getAllUserInteractions,
+    getSingleUserInteraction,
+    addUserInteraction,
+    editUserInteraction,
+    deleteUserInteraction
+} = require('./controllers/userInteraction_controller')
+const {
+    getAllMessages,
+    getSingleMessage,
+    addMessage,
+    editMessage,
+    deleteMessage,
+    getUserSentMessages,
+    getUserReceivedMessages
+} = require('./controllers/message_controller')
+const {
+    getAllLocations,
+    getSingleLocation,
+    addLocation,
+    editLocation,
+    deleteLocation
+} = require('./controllers/location_controller')
+const {
+    getAllConversations,
+    getSingleConversation,
+    addConversation,
+    editConversation,
+    deleteConversation
+} = require('./controllers/conversation_controller')
 
 
 const port = process.env.PORT || 3000
@@ -34,6 +103,10 @@ app.use((req, res, next) => {
         req.user = undefined
         next()
     }
+})
+app.use(express.static(path.join(__dirname, "./dist")))
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, './dist', 'index.html'))
 })
 
 /////////////////////////////////////
