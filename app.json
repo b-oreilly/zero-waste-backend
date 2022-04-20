@@ -1,0 +1,7 @@
+{
+  "name": "Wecycle web application",
+  "description": "A Node.js app using Express as the back-end and Vue.js for the front-end.",
+  "repository": "https://github.com/b-oreilly/zero-waste-backend",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "express", "vue"]
+}

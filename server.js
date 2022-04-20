@@ -5,6 +5,11 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 require('./db')()
 
+app.use(express.static(path.join(__dirname, "./dist")))
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, './dist', 'index.html'))
+})
+
 const {
     getAllItems,
     getSingleItem,
@@ -105,10 +110,6 @@ app.use((req, res, next) => {
     }
 })
 
-app.use(express.static(path.join(__dirname, "./dist")))
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, './dist', 'index.html'))
-})
 
 /////////////////////////////////////
 
