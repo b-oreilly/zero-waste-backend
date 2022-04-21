@@ -9,6 +9,30 @@ app.use(express.static(path.join(__dirname, "./dist")))
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, './dist', 'index.html'))
 })
+const port = process.env.PORT || 3000
+
+const app = express()
+
+app.use(cors(corsOptions));
+const corsOptions = {
+    origin: "https://wecycle.netlify.app",
+    credentials: true,
+};
+
+app.use(express.json())
+
+app.use((req, res, next) => {
+    if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+        jwt.verify(req.headers.authorization.split(' ')[1], 'zero_waste_app', (err, decode) => {
+            if (err) req.user = undefined
+            req.user = decode
+            next()
+        })
+    } else {
+        req.user = undefined
+        next()
+    }
+})
 
 const {
     getAllItems,
@@ -89,26 +113,6 @@ const {
     editConversation,
     deleteConversation
 } = require('./controllers/conversation_controller')
-
-
-const port = process.env.PORT || 3000
-
-const app = express()
-app.use(cors())
-app.use(express.json())
-
-app.use((req, res, next) => {
-    if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-        jwt.verify(req.headers.authorization.split(' ')[1], 'zero_waste_app', (err, decode) => {
-            if (err) req.user = undefined
-            req.user = decode
-            next()
-        })
-    } else {
-        req.user = undefined
-        next()
-    }
-})
 
 
 /////////////////////////////////////
