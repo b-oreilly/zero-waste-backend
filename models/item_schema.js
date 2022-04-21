@@ -9,6 +9,10 @@ const itemSchema = new Schema({
         type: String,
         required: [true, 'Description field is required.']
     },
+    itemImage: {
+        type: String,
+        required: [true, 'Image field is required.']
+    },
     userID: {
         type: Schema.Types.ObjectId,
         ref: "User",

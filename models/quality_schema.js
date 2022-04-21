@@ -8,3 +8,4 @@ const qualitySchema = new Schema({
 })
 
 module.exports = model('Quality', qualitySchema)
+

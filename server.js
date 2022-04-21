@@ -1,11 +1,39 @@
 const express = require('express')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, './itemImages')
+    },
+    filename: function (req, file, cb) {
+        cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname)
+    }
+})
+
+const fileFilter = (req, file, cb) => {
+    // reject a file
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } 
+    else {
+        cb(null, false);
+    }
+};
+
+const upload = multer({
+    storage: storage, 
+    limits: {
+        fileSize: 1024 * 1024 * 8
+    },
+    fileFilter: fileFilter
+})
 
 require('dotenv').config()
 require('./db')()
 
-const { getAllItems, getSingleItem, addItem, editItem, deleteItem, getUserItems, getCategoryItems, getQualityItems } = require('./controllers/item_controller')
+const { getAllItems, getSingleItem, addItem, editItem, deleteItem, getCategoryItems, getUserItems, getQualityItems } = require('./controllers/item_controller')
 const { register, login, loginRequired, getAllUsers, getSingleUser, editUser, deleteUser } = require('./controllers/user_controller')
 const { getAllCategories, addCategory, getSingleCategory, editCategory, deleteCategory } = require('./controllers/category_controller')
 const { getAllQualities, getSingleQuality, addQuality, editQuality, deleteQuality } = require('./controllers/quality_controller')
@@ -22,6 +50,9 @@ const port = process.env.PORT || 3000
 const app = express()
 app.use(cors())
 app.use(express.json())
+
+//Make itemImages folder public
+app.use('/itemImages', express.static('itemImages'))
 
 app.use((req, res, next) => {
     if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -41,7 +72,7 @@ app.use((req, res, next) => {
 // Item Routes 
 app.get('/items', getAllItems)
 app.get('/items/:id', getSingleItem)
-app.post('/items', loginRequired, addItem)
+app.post('/items', upload.single('itemImage'), loginRequired, addItem)
 app.put('/items/:id', loginRequired, editItem)
 app.delete('/items/:id', loginRequired, deleteItem)
 app.get('/items/user/:userID', getUserItems)

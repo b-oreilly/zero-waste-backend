@@ -1,4 +1,4 @@
-const Item = require('../models/item_schema')
+const Item = require('../models/item_schema');
 
 const getAllItems = (req, res) => {
     Item.find().populate('categoryID').populate('qualityID').populate('userID')
@@ -26,24 +26,47 @@ const getSingleItem = (req, res) => {
     })
 }
 
-const addItem = (req, res) => {
-    let itemData = req.body
+// const addItem = (req, res) => {
+//     let itemData = req.body
+//     let itemImage = req.file.path
 
-    Item.create(itemData)
-        .then((data) => {
-            if (data) {
-                res.status(201).json(data)
-            }
-        })
-        .catch((err) => {
-            if (err.name === "ValidationError") {
-                res.status(422).json(err) //Unprocessable Entity
-            } else {
-                console.error(err)
-                res.status(500).json(err) //Internal Server Error 
-            }
-        })
-}
+//     Item.create(itemData, itemImage)
+//         .then((data) => {
+//             if (data) {
+//                 res.status(201).json(data)
+//             }
+//         })
+//         .catch((err) => {
+//             if (err.name === "ValidationError") {
+//                 res.status(422).json(err) //Unprocessable Entity
+//             } else {
+//                 console.error(err)
+//                 res.status(500).json(err) //Internal Server Error 
+//             }
+//         })
+// }
+
+const addItem =  (req, res) => {
+    let itemData = req.body
+    let itemImage = req.file.path
+   
+    Item.create({
+     title: itemData.title,
+     description: itemData.description,
+     itemImage: itemImage,
+     userID: itemData.userID,
+     categoryID: itemData.categoryID,
+     qualityID: itemData.qualityID,
+     price: itemData.price,
+     claimed: itemData.claimed,
+
+     //put all data that are required here...
+    }, (err, data)=> {
+     if (err) return handleError(err) //here you custom handleError of Just res.status(400).json(err);
+   
+     res.status(201).json(data)
+    })
+   }
 
 const editItem = (req, res) => {
     let itemData = req.body
