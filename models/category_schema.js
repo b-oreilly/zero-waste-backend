@@ -4,6 +4,10 @@ const categorySchema = new Schema({
     name: {
         type: String,
         required: [true, 'name field is required']
+    },
+    icon: {
+        type: String,
+        required: [true, 'MDI is required']
     }
 })
 
